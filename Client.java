@@ -14,7 +14,8 @@ public class Client {
             Scanner scanDbl = new Scanner(System.in);
             Registry registry = LocateRegistry.getRegistry("127.0.0.1");
 
-            IRemoteTransaction rt = (IRemoteTransaction) registry.lookup("Transaction");
+            IRemoteLogin rl = (IRemoteLogin) registry.lookup("Login");
+            IRemoteTransaction rt = rl.login();
             IRemoteCompany rc = (IRemoteCompany) registry.lookup("Company");
             IRemoteUsuario ru = (IRemoteUsuario) registry.lookup("User");
 
@@ -53,8 +54,8 @@ public class Client {
                         trans.setOperationPrice(operationPrice);
                         trans.setOperationDate(LocalDateTime.now());
 
-                        rt.ofertar(trans);
-                        System.out.println("Su oferta ha sido enviada, si es exitosa aparecerá en su lista de transacciones en los próximos 2 minutos");
+                        
+                        System.out.println(rt.ofertar(trans)?"Su oferta ha sido exitosa":"Lo sentimos, su oferta ha sido rechazada");
 
                         break;
                     }
@@ -82,8 +83,7 @@ public class Client {
                         trans.setOperationPrice(operationPrice);
                         trans.setOperationDate(LocalDateTime.now());
 
-                        rt.ofertar(trans);
-                        System.out.println("Su oferta ha sido enviada, si es exitosa aparecerá en su lista de transacciones en los próximos 2 minutos");
+                        System.out.println(rt.ofertar(trans)?"Su oferta ha sido exitosa":"Lo sentimos, su oferta ha sido rechazada");
 
                     }
                     break;
